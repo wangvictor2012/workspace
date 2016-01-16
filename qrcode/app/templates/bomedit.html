@@ -1,0 +1,270 @@
+{% extends "base.html" %}
+{% block content %}
+<script type="text/javascript" src="../static/js/Material_serial_Index.js"></script> 
+<script type="text/javascript" src="../static/js/ERP_info.js"></script> 
+<script type="text/javascript"> 
+var data_material = Material_serial_Index.split(' ');
+for (var j=0; j<data_material.length; j++){
+  if(material_info[data_material[j]]){
+    data_material[j] = data_material[j] + '; ' + material_info[data_material[j]][0] + '; ' + material_info[data_material[j]][1];
+  }
+}
+</script>
+
+<script type="text/javascript"> 
+$(function() { 
+var datax = "{{typedatax}}";
+var data = datax.split(' ');
+$('#subname_input').autocomplete(data,{width: 320}).result(function(event, data, formatted) { 
+    });
+$('#typecode2').autocomplete(data,{width: 120}).result(function(event, data, formatted) { 
+    });  
+}); 
+</script> 
+
+<script type="text/javascript"> 
+$(function() { 
+var rows = document.getElementById("myTable").rows.length;
+for (var i=0;i<rows; i++){
+var idname = '#Material_Serial_Input' + i.toString();
+$(idname).autocomplete(data_material,{width: 500}).result(function(event, data_material, formatted) { 
+    });
+  } 
+}); 
+</script>
+
+<script type="text/javascript">
+function insRow()
+  {
+  var rows = document.getElementById("myTable").rows.length;
+  var idname1 = 'Material_Serial_Input' + rows.toString();
+  var idname2 = 'Material_Name_Input' + rows.toString();
+  var idname3 = 'Material_Model_Input' + rows.toString();
+  var x=document.getElementById('myTable').insertRow(-1);
+  var x1=x.insertCell(0);
+  var x2=x.insertCell(1);
+  var x3=x.insertCell(2);
+  var x4=x.insertCell(3);
+  var x5=x.insertCell(4);
+  var x6=x.insertCell(5);
+  x1.innerHTML = "<input type='hidden' name='material_check' value='NO' /><input type='checkbox' class='form-control' style='width:20px;height:20px' id='check1' name='material_check' value='OK'/>";
+  x2.innerHTML = "<input name='material_serial' class='form-control' id='" + idname1 + "' value='' onblur=find_name_model('" + idname1 + "','" + idname2 + "','" + idname3 + "')></input></td>";
+  x3.innerHTML = "<input name='material_name' class='form-control' id='"+idname2+"' value='' readonly='readonly'></input></td>";
+  x4.innerHTML = "<input name='material_model' class='form-control' id='"+idname3+"' value='' readonly='readonly'></input></td>";
+  x5.innerHTML = "<input name='material_quantity' class='form-control' value='1' type='number' min='0' max='10000' step='1'></input></td>";
+  x6.innerHTML = "<input name='material_comment' class='form-control' value='' ></input></td>";
+    
+  var data = Material_serial_Index.split(' ');
+  var idnamex = '#Material_Serial_Input' + rows.toString();
+  $(idnamex).autocomplete(data_material,{width: 500}).result(function(event, data_material, formatted) { 
+    });
+
+  }
+</script>
+
+<script type="text/javascript">
+function delRow(){
+  var c = document.getElementsByName("material_check");
+  var tab_row = new Array();
+  var cou = 0;
+
+  for(i=0;i<c.length;i++)
+  {
+    if(c[i].checked)
+     {
+        var index = c[i].parentNode.parentNode.rowIndex;   
+        tab_row[cou] = index;
+        cou ++;
+     }
+  }
+
+  for (x=(tab_row.length-1);x>-1;x--){
+      document.getElementById('myTable').deleteRow(tab_row[x]);
+    }
+}
+</script>
+<script type="text/javascript">
+function find_name_model(x, id1, id2){
+  //var material_info = {'10.01.001':['测试1test','测试2test'],'01.01.01.001':['哈哈1haha','哈哈2haha']};
+  if (document.getElementById(x) != null) {
+    var y_get=document.getElementById(x).value;
+    var y_get_split=y_get.match(/[\d+\.]+/g);
+    var y = y_get_split[0];
+    document.getElementById(x).value = y;
+    //document.getElementById(id1).value=y;
+    var info = material_info[y];//form ERP_info.js
+    if (info){
+      document.getElementById(id1).value=info[0];
+      document.getElementById(id2).value=info[1];}
+  }
+}
+</script>
+
+<br>
+<div style="width:800px">
+	<div style="width:400px;float:left" align="center">
+	   {{form.newbom(class="btn btn-info", style="width:100px; height:40px")}} 
+	</div>	
+	<div style="width:400px; float:left" align="center">
+     <button data-toggle='modal' data-target='#myModal' style = 'width:100px;height:40px' class="btn btn-info"> 复制 BOM </button>
+	</div>	
+</div>
+<br><br><br>
+<div style="width:800px">
+	<table border=1 cellpadding="8" class="table table-striped" >
+            <th width="120" style="text-align:center">序列号</th>
+            <th width="100" style="text-align:center">版本</th>
+            <th width="120" style="text-align:center">ERP编号</th>
+            <th width="100" style="text-align:center">使用状态</th>
+            <th width="300" style="text-align:center">备注</th>
+            <tr>
+                <td style='text-align:center'><input name='subname_vice' id='typecode2' list="typex" class="form-control" value = {{bom_copy_info[0]}}></input></td>
+                <td style='text-align:center'><input name='version_vice' id='version2'  class="form-control" value = {{bom_copy_info[1]}}></input></td>
+            	<td style='text-align:center'><input name='erp_serial' class="form-control" value = {{bom_copy_info[2]}}></input></td>
+            	<td style='text-align:center'><form><select name="status" class="form-control" value = {{bom_copy_info[3]}}>
+												<option value="1">启用</option>
+												<option value="0">禁用</option></select>
+												</form></td>
+            	<td style='text-align:center'><input name='comments' tyle='text'  class="form-control" value = {{bom_copy_info[4]}}></input></td>
+            
+            </tr>
+  	</table>
+</div>
+<h4>物料详单：</h4>
+<div style="width:800px">
+	<table border=1 cellpadding="8" class="table table-striped" id="myTable">
+            <th width="50" style="text-align:center">选择</th>
+            <th width="150" style="text-align:center">物料编号</th>
+            <th width="200" style="text-align:center">物料名称</th>
+            <th width="200" style="text-align:center">规格型号</th>
+            <th width="90" style="text-align:center">数量</th>
+            <th width="190" style="text-align:center">备注</th>
+            {% for i in range(num_rows) %}
+            <tr>
+              <td style='text-align:center'><input type="hidden" name="material_check" id="test" value="NO" /><input type="checkbox" class="form-control" style="width:20px;height:20px" id="check1" name='material_check' value='OK'/></td>
+              <td style='text-align:center'><input name='material_serial' id='{{material_table_info[0][i]}}' class="form-control" value='{{table_detail[i][1]}}' onblur="find_name_model(this.id, '{{material_table_info[1][i]}}', '{{material_table_info[2][i]}}')" ></input></td>
+            	<td style='text-align:center'><input name='material_name' class="form-control" value='{{table_detail[i][2]}}' readonly="readonly" id='{{material_table_info[1][i]}}'></input></td>
+            	<td style='text-align:center'><input name='material_model' class="form-control" value='{{table_detail[i][3]}}' readonly="readonly" id='{{material_table_info[2][i]}}'></input></td>
+            	<td style='text-align:center'><input name='material_quantity' class="form-control" value='{{table_detail[i][4]}}' type='number' min='0' max='10000' step='1'></input></td>
+            	<td style='text-align:center'><input name='material_comment' tyle='text'  class="form-control" value='{{table_detail[i][5]}}'></input></td>
+            
+            </tr>
+            {% endfor %}
+  	</table>
+</div>
+
+<div style="width:800px">
+	<div style="width:200px; float:left" align="left">
+	</div>	
+    <div style="width:300px; float:left" align="left">
+       <input type="button" onclick="delRow()" value="删除" class="btn btn-default", style="width:120px; height:40px" />
+    </div>  
+	<div style="width:300px; float:left" align="left">
+       <input type="button" onclick="insRow()" value="添加" class="btn btn-default", style="width:120px; height:40px" />
+	</div>	
+	<div style="width:200px; float:left" align="right">
+     <input type="hidden" value="NOT_COMMIT" id='commit_flag' name='commit_flag'/>
+     <button class="btn btn-default" style = 'width:120px;height:40px' onclick = show()> 提交 </button>
+	</div>
+</div>
+
+
+
+<script type="text/javascript">
+function show(){
+  var rows = document.getElementById("myTable").rows.length;
+  var num = 0;
+  for (var i=0; i<rows-1; i++){
+      var material_serial=document.getElementsByName('material_serial')[i].value;
+      if(material_serial){ num ++;}
+  }
+  var info ="共计" + num.toString() + "条物料信息\n\n是否确定注册？\n"
+  if(confirm(info)){
+    document.getElementById("commit_flag").value = 'YES_COMMIT';
+  }
+  else{document.getElementById("commit_flag").value = 'NO_COMMIT';}
+}
+</script>
+
+{% if flag_register==20 %}
+    <script language="javascript">
+        alert("该版本产品已经被注册，请更改产品序列号，版本或ERP编号！(T_T T_T)\n");
+    </script>
+
+{% elif flag_register==30 %}
+    <script language="javascript">
+        alert("产品注册失败，请检查产品序列号，版本，ERP编号！(T_T T_T)\n");
+    </script>
+
+{% elif flag_register==31 %}
+    <script language="javascript">
+        alert("物料详单录入错误，请检查物料信息! (T_T T_T)\n");
+    </script>
+
+{% elif flag_register==32 %}
+    <script language="javascript">
+        alert("数据库信息修正出错，请退出登录重新尝试! (T_T T_T)\n");
+    </script>
+
+{% elif flag_register==22 %}
+    <script language="javascript">
+        alert("成功录入数据库! (^o^ ^o^)\n");
+    </script>
+
+{%  endif %}
+
+
+<div class='modal fade' id='myModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+</script>
+   <div class="modal-dialog" >
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" 
+               data-dismiss="modal" aria-hidden="true">
+                  &times;
+            </button>
+            <h4 class="modal-title" id="myModalLabel">
+               请输入需要复制的BOM信息：
+            </h4>
+         </div>
+         <div class="modal-body">
+            <div class="divcss_material" style="height:50px" >
+              <div style="width:400px;float:left" class="input-group" align="center">
+                  <span class="input-group-addon">序列号</span>
+                  <input id='subname_input' name='subname_input' class="form-control" style="width:320px"> </input>
+              </div>
+
+              <div style="width:160px;float:left" class="input-group" align="center">
+                  <span class="input-group-addon">版本</span>
+                  <input id="version_input" name='version_input' class="form-control"> </input>
+              </div>
+              <br><br><br>
+                
+            </div>
+
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-primary" onclick='search()'>查找</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+         </div>
+      </div><!-- /.modal-content -->
+</div><!-- /.modal -->
+</div>
+
+
+<script type="text/javascript">
+function search(){
+  var subname = document.getElementById('subname_input').value;
+  var version = document.getElementById('version_input').value;
+  var website = '3 '+subname.toString()+"$"+version.toString();
+  //var website = '3%2021A01%241.0';
+  window.location.href = website;
+
+}
+
+
+</script>
+
+
+<br><br><br><br><br><br><br><br><br>
+{% endblock %}

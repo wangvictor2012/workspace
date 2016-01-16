@@ -1,0 +1,190 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+{% block content %}
+
+<script language="javascript">
+function  a(){
+    $("#img").jqprint();
+}
+</script>
+<script language="javascript">
+function print(){  
+    if ('{{flag}}' == 'index'){
+        if ('{{flag_register}}' != '5'){
+            var warning = "好开心，已成功录入数据库! (^o^ ^o^)\n\n需要打印该标签吗？\n";}
+        else{var warning = "已录入数据库，无法更新注册！(0_0 0_0)\n\n需要打印该标签吗？\n";}
+        }
+    else {
+        var warning = '确定打印吗？\n';}
+
+    if (confirm(warning)) {
+　　    var newstr = document.all.item("img").innerHTML;
+        var webcontent1 = "<html><div style='float:left;width:15;height:75'></div><div style='width:250;height:66'><div style='float:left;width:140;'><font face='Microsoft YaHei' size='5'>上海方菱</font><br><div style='float:up;width:200;height:5'></div><font face='Microsoft YaHei' size='4'>型  号："+ '{{partname}}'+ "</font> </div><div style='height:66'><img id='img' src='";
+        src = '{{filename}}';
+        webcontent2 = "' /></div><font face='Microsoft YaHei' size='4'>序列号：" + "{{code_use}}"+  "</font></div></html> ";
+
+        webcontent = webcontent1 + src + webcontent2;
+        printWindow = window.open();
+        printWindow.document.write(webcontent);
+　　    printWindow.print();
+　　    printWindow.close();
+　   　 }
+}
+
+</script>
+
+
+
+<style>
+.divcss{width:800px;height:400px;border:0px solid #000; overflow-y:scroll; }
+</style>
+{% if flag == "index" %}
+<div id='info' class="divcss">
+    <table border=1 cellpadding="8" class="table table-striped">
+            <th></th>
+            <th width="160" style="text-align:center">Sub Partname</th>
+            <th width="80" style="text-align:center">Version</th>
+            <th width="110" style="text-align:center">Partname</th>
+            <th width="580" style="text-align:center">Description</th>
+        {% for info in datainfo %}
+            <tr>
+            {% for x in info %}
+                <td style="text-align:center"><a href={{url_for('index', machinecode=info[1], flag_return = 1, version_info=info[2], remark_info = remark_info)}}>{{x}}</a></td>
+            {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endif %}
+
+{% if flag == "search" %}
+<div id='info' class="divcss">
+    <table border=1 cellpadding="8" class="table table-striped">
+            <th></th>
+            <th width="110" style="text-align:center">Serial</th>
+            <th width="140" style="text-align:center">Sub Partname</th>
+            <th width="110" style="text-align:center">Name</th>
+            <th width="200" style="text-align:center">Date</th>
+            <th width="240" style="text-align:center">Comment</th>
+        {% for info in datainfo %}
+            <tr>
+            {% for x in info %}
+                <td style="text-align:center"><a href={{url_for('search', machinecode=info[1], page = 1)}}>{{x}}</a></td>
+            {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<div align='center' style = "width:800px;">
+{% if prev %}<a href={{ url_for('search', machinecode = '+', page = pagenow - 1) }}> &lt;&lt; 上一页</a>{% else %} &lt;&lt;上一页{% endif %} | 
+第 {{pagenow}} 页, 共计：{{page_total}} |
+{% if nextv %}<a href={{ url_for('search', machinecode = '+', page = pagenow + 1) }}>下一页 >></a>{% else %}下一页 >>{% endif %}&nbsp;&nbsp;
+<div align='right' style="float:right;">页码查找：{{form.inputpage(size='1')}}&nbsp;{{form.submitpage()}}</div>
+</div>
+
+{% endif %}
+
+<br ><br>
+{% if img %}
+<div style='width:800px;height:200px;border:1px solid #000; border-radius:25px;' >
+{% if flag != "search" %}
+<div style='float:left; width:30px;height:160px;'></div>
+<div style='float:left; width:270px;height:160px;'>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;二维码标签:</p>
+<!--<img id='img' src={{filename}} width='150' height='150' />-->
+
+<div style="float:left; width:120;"> 
+<font face="Microsoft YaHei" size='5'>上海方菱</font><br><br>
+<font face="Microsoft YaHei" size='4'>型 号 ：{{partname}}</font>
+</div>
+<div style="height:55" align='center'><img id='img' src={{filename}} width='80' height='80'/></div>
+<br><div><font face="Microsoft YaHei" size='4'>序列号：{{code_use}}</font></div>
+
+
+</div>
+<div style='float:left; width:100px;height:160px;'>
+<p>备注信息：<p>
+<p>{{form.remark(rows=7, cols=40)}}</p>
+</div>
+<div style='float:right; width:150px;height:160px;'>
+<br><br><br><br><br>
+<p>{{form.register(class="btn btn-info", style="width:120px; height:40px")}} </p>
+
+</div>
+{% else%}
+<div style="float:left; width:100px;height:160px"></div>
+<div style='float:left; width:300px;height:160px;'>
+<h5>&nbsp;&nbsp;&nbsp;&nbsp;二维码标签:</h5>
+ <div style="float:left; width:120;"> 
+<font face="Microsoft YaHei" size='5'>上海方菱</font><br><br>
+<font face="Microsoft YaHei" size='4'>型 号 ：{{partname}}</font>
+</div>
+<div style="height:55" align='center'><img id='img' src={{filename}} width='80' height='80'/></div>
+<br><div><font face="Microsoft YaHei" size='4'>序列号：{{code_use}}</font></div>
+
+</div>
+
+<div style='float:right; width:250px;height:160px;'>
+<br><br><br><br><br>
+<p>{{form.print_button(style="width:120px; height:40px", class="btn btn-info")}}</p>
+</div>
+{% endif %}
+</div>
+{% endif %} 
+
+{% if flag_register==1 %}
+    <script language="javascript">
+        if (confirm("确定注册吗？\n")){
+            var web = "{{version_info}}" + "%20" + "{{code_input}}" + "%202%20";
+            var remark = "{{remark_info}}";
+            web = web + remark;
+            window.location.href = web;
+        }    
+    </script>
+
+{% elif flag_register==2 %}
+    <script language="javascript">
+        print();
+
+        var web = "{{version_info}}" + "%20" + "{{code_input}}" + "%203%20";
+        var remark = "{{remark_info}}";
+        web = web + remark;
+        window.location.href = web;
+    </script>
+
+{% elif flag_register==3 %}
+    <script language="javascript">
+        alert("数据库录入失败，请重新尝试录入！(T_T T_T)\n");
+    </script>
+
+{% elif flag_register==4 %}
+    <script language="javascript">
+        alert("请先选择需要录入的设备型号！\n");
+    </script>
+
+{% elif flag_register==5 %}
+    <script language="javascript">
+        //alert("已录入数据库，请重新选择产品！(*_* *_*)");
+        print();
+    </script>
+
+{% elif flag_register==10 %}
+    <script language="javascript">
+         alert("请先选择需要打印的设备型号！\n");
+    </script>
+
+{% elif flag_register==11 %}
+    <script language="javascript">
+        print();
+    </script>
+{% endif %}
+
+{% if flag_page==1 %}
+    <script language="javascript">
+        alert("输入页码超出范围，请重新输入页码进行查询！\n");
+    </script>
+{% endif %}
+
+<br><br><br><br><br><br>
+{% endblock %}

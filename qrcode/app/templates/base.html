@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
+<script language="javascript" src="../static/js/jquery-1.11.3.min.js"></script>
+<script language="javascript" src="../static/js/jquery.jqprint-0.3.js"></script>
+<script type="text/javascript" src="../static/js/jquery.autocomplete.min.js"></script> 
+<script type="text/javascript" src="../static/js/TypecodeIndex.js"></script> 
+<script type="text/javascript" src="../static/js/Material_serial_Index.js"></script> 
+<script type="text/javascript" src="../static/js/bootstrap.min.js"></script> 
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0" />
+<title>生产管理系统</title>
+<link rel="Stylesheet" type="text/css" href="{{ url_for('static', filename='css/jquery.autocomplete.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+</head>
+<script type="text/javascript"> 
+$(function() { 
+//var data = "Core Selectors Attributes Traversing Manipulation CSS Events Effects Ajax Utilities".split(" ");
+//var data = "{{typedata}}".split(" ");
+if ("{{flag}}"=="search"){ var datax = TypecodeData + "{{typedata}}";}
+else{datax = "{{typedata}}"}
+var data = datax.split(' ');
+$('#typecode').autocomplete(data,{width: 570}).result(function(event, data, formatted) { 
+    }); 
+}); 
+</script> 
+
+{% block flash_templete %}
+
+  <body>
+    <script language="javascript" type="text/javascript">
+    width_screen = screen.width;
+    var width = width_screen -340;
+    document.write("<div style='width:" + width + "px' align='center'>");
+    </script>
+
+<ul class="nav nav-tabs nav-justified">
+  {% if flag=='index' %}
+   <li class="active"><a href={{url_for('index', machinecode='+', flag_return=0,version_info='init', remark_info='x')}}>主页</a></li>
+   <li><a href={{url_for('search', machinecode='+', page=1 )}}>历史查询</a></li>
+   <li><a href={{url_for('bominfo', product_flag='#', code_search='+')}}>BOM 查询</a></li>
+   <li><a href={{url_for('bomcalculate', product_flag='#', code_search='+', product_id = '#')}}>BOM 计算</a></li>
+   {% if flag_edit =='Yes' %}
+   <li><a href={{url_for('bomedit', num_rows = 3, table_detail='#')}}>BOM 编辑</a></li>
+   {% endif %}
+
+
+   {% elif flag=='search' %}
+   <li><a href={{url_for('index', machinecode='+', flag_return=0,version_info='init', remark_info='x')}}>主页</a></li>
+   <li class="active"><a href={{url_for('search', machinecode='+', page=1 )}}>历史查询</a></li>
+   <li><a href={{url_for('bominfo', product_flag='#', code_search='+')}}>BOM 查询</a></li>
+   <li><a href={{url_for('bomcalculate', product_flag='#', code_search='+', product_id = '#')}}>BOM 计算</a></li>
+   {% if flag_edit =='Yes' %}
+   <li><a href={{url_for('bomedit', num_rows = 3, table_detail='#')}}>BOM 编辑</a></li>
+   {% endif %}
+   
+   {% elif flag == 'bominfo' %}
+   <li><a href={{url_for('index', machinecode='+', flag_return=0,version_info='init', remark_info='x')}}>主页</a></li>
+   <li><a href={{url_for('search', machinecode='+', page=1 )}}>历史查询</a></li>
+   <li class="active"><a href={{url_for('bominfo', product_flag='#', code_search='+')}}>BOM 查询</a></li>
+   <li><a href={{url_for('bomcalculate', product_flag='#', code_search='+', product_id = '#')}}>BOM 计算</a></li>
+   {% if flag_edit =='Yes' %}
+   <li><a href={{url_for('bomedit', num_rows = 3, table_detail='#')}}>BOM 编辑</a></li>
+   {% endif %}
+
+   {% elif flag == 'bomcalculate' %}
+   <li><a href={{url_for('index', machinecode='+', flag_return=0,version_info='init', remark_info='x')}}>主页</a></li>
+   <li><a href={{url_for('search', machinecode='+', page=1 )}}>历史查询</a></li>
+   <li><a href={{url_for('bominfo', product_flag='#', code_search='+')}}>BOM 查询</a></li>
+   <li class="active"><a href={{url_for('bomcalculate', product_flag='#', code_search='+', product_id = '#')}}>BOM 计算</a></li>
+   {% if flag_edit =='Yes' %}
+   <li><a href={{url_for('bomedit', num_rows = 3, table_detail='#')}}>BOM 编辑</a></li>
+   {% endif %}
+
+   {% elif flag == 'bomedit' and flag_edit =='Yes'%}
+   <li><a href={{url_for('index', machinecode='+', flag_return=0,version_info='init', remark_info='x')}}>主页</a></li>
+   <li><a href={{url_for('search', machinecode='+', page=1 )}}>历史查询</a></li>
+   <li><a href={{url_for('bominfo', product_flag='#', code_search='+')}}>BOM 查询</a></li>
+   <li><a href={{url_for('bomcalculate', product_flag='#', code_search='+', product_id = '#')}}>BOM 计算</a></li>
+   <li class="active"><a href={{url_for('bomedit', num_rows = 3, table_detail='#')}}>BOM 编辑</a></li>
+
+   {% endif %}
+</ul>
+  <div style="float:right">   
+    {% if user != '' %}
+      欢迎你:  {{ username }} &nbsp;&nbsp;<a href={{url_for('logout')}}>退出</a>
+    {% endif %} 
+  </div>
+    </div>
+    <br>
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning" align="center">
+      {{ message }}<br>
+    </div>
+    {% endfor %}
+    <!--<div style="width:900px" align='center'><h2> 二维码生成器 </h2></div>-->
+    <div class ="container">
+    <form action="" method="post" name="index">
+        {{form.hidden_tag()}}
+        {% if flag!='bomedit'%}
+        <div class="form-group">
+          <div class="col-xs-7">
+            <div class="input-group">
+                {% if flag == "index" %}
+                  <span class="input-group-addon">子串号</span></span>
+
+                {% elif flag == "search" %}
+                  <span class="input-group-addon">序列号</span></span>
+
+                {% elif flag == "bominfo" or flag == 'bomcalculate' %}
+                  <span class="input-group-addon">BOM单</span></span>
+
+                {% endif %}
+
+                  <input id="typecode" name='select_info' list="typex"  class="form-control" value={{code_input}} > </input>
+            </div>
+          </div>
+        </div> 
+
+        {{form.submit(class="btn btn-primary", style="width:90px;")}}
+        
+    <br><br>
+    {% endif %}
+    {% block content %}{% endblock %}
+    </form>
+    
+  </div>
+  </body>
+
+{% endblock %}  
+</html>

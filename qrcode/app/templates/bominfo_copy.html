@@ -1,0 +1,47 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+.divcss_product{width:400px;height:350px;float:left; border:0px solid #000; overflow-y:scroll; }
+.divcss_material{width:600px;height:350px;border:0px solid #000; overflow-y:scroll; }
+</style>
+<div style='float:left;width:410px'><h4> 产品列表</h4></div>
+<div style='width:800px'><h4>物料清单：<font color='red'> {{table_material_name}}</font></h4></div>
+<div id='info' class="divcss_product" >
+     
+    <table border=1 cellpadding="8" class="table table-bordered">
+            <th></th>   
+            <th width="110" style="text-align:center">产品</th>
+            <th width="80" style="text-align:center">版本</th>
+            <th width="180" style="text-align:center">日期</th>
+        {% for info in table_product %}
+            <tr>
+            {% for x in info[:-1] %}
+                <td style="text-align:center"><a href={{url_for('bominfo', product_flag = info[-1], code_search = code_input)}}>{{x}}</a></td>
+            {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+<div id='info' class="divcss_material" >
+   
+    <table border=1 cellpadding="8" class="table table-bordered">
+           
+            <th></th>
+            <th width="100" style="text-align:center">物料编号</th>
+            <th width="250" style="text-align:center">物料名称</th>
+            <th width="250" style="text-align:center">规格型号</th>
+            <th width="80" style="text-align:center">数量</th>
+        {% for info in table_material %}
+            <tr>
+            {% for x in info %}
+                <td style="text-align:center">{{x}}</td>
+            {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+
+
+{% endblock %}

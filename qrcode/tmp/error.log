@@ -1,0 +1,151 @@
+2015-11-19 17:54:24,687 ERROR: Exception on /search/+ 1 [GET] [in D:\Program Files\python\lib\site-packages\flask\app.py:1423]
+Traceback (most recent call last):
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "D:\Program Files\python\lib\site-packages\flask_login.py", line 792, in decorated_view
+    return func(*args, **kwargs)
+  File "D:\Etudiant\Test\qrcode\app\views.py", line 303, in search
+    f=open('/app/static/js/TypecodeIndex.js','r')
+IOError: [Errno 2] No such file or directory: '/app/static/js/TypecodeIndex.js'
+2015-11-19 17:54:33,565 ERROR: Exception on /search/+ 1 [GET] [in D:\Program Files\python\lib\site-packages\flask\app.py:1423]
+Traceback (most recent call last):
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "D:\Program Files\python\lib\site-packages\flask_login.py", line 792, in decorated_view
+    return func(*args, **kwargs)
+  File "D:\Etudiant\Test\qrcode\app\views.py", line 303, in search
+    f=open('/app/static/js/TypecodeIndex.js','r')
+IOError: [Errno 2] No such file or directory: '/app/static/js/TypecodeIndex.js'
+2015-11-19 17:56:12,359 ERROR: Exception on /search/+ 1 [GET] [in D:\Program Files\python\lib\site-packages\flask\app.py:1423]
+Traceback (most recent call last):
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "D:\Program Files\python\lib\site-packages\flask_login.py", line 792, in decorated_view
+    return func(*args, **kwargs)
+  File "D:\Etudiant\Test\qrcode\app\views.py", line 303, in search
+    f=open('/app/static/js/TypecodeIndex.js','r')
+IOError: [Errno 2] No such file or directory: '/app/static/js/TypecodeIndex.js'
+2015-11-19 18:03:29,579 ERROR: Exception on /search/+ 1 [GET] [in D:\Program Files\python\lib\site-packages\flask\app.py:1423]
+Traceback (most recent call last):
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "D:\Program Files\python\lib\site-packages\flask_login.py", line 792, in decorated_view
+    return func(*args, **kwargs)
+  File "D:\Etudiant\Test\qrcode\app\views.py", line 303, in search
+    f=open('/app/static/js/TypecodeIndex.js','r')
+IOError: [Errno 2] No such file or directory: '/app/static/js/TypecodeIndex.js'
+2015-11-19 18:26:10,750 ERROR: Exception on /search/+ 1 [GET] [in D:\Program Files\python\lib\site-packages\flask\app.py:1423]
+Traceback (most recent call last):
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "D:\Program Files\python\lib\site-packages\flask_login.py", line 792, in decorated_view
+    return func(*args, **kwargs)
+  File "D:\Etudiant\Test\qrcode\app\views.py", line 303, in search
+    f=open('/app/static/js/TypecodeIndex.js','r')
+IOError: [Errno 2] No such file or directory: '/app/static/js/TypecodeIndex.js'
+2015-11-19 18:27:01,395 ERROR: Exception on /search/+ 1 [GET] [in D:\Program Files\python\lib\site-packages\flask\app.py:1423]
+Traceback (most recent call last):
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "D:\Program Files\python\lib\site-packages\flask_login.py", line 792, in decorated_view
+    return func(*args, **kwargs)
+  File "D:\Etudiant\Test\qrcode\app\views.py", line 303, in search
+    f=open('./app/static/js/TypecodeIndex.js','r')
+IOError: [Errno 2] No such file or directory: '/app/static/js/TypecodeIndex.js'
+2015-11-19 18:27:12,663 ERROR: Exception on /search/+ 1 [GET] [in D:\Program Files\python\lib\site-packages\flask\app.py:1423]
+Traceback (most recent call last):
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "D:\Program Files\python\lib\site-packages\flask_login.py", line 792, in decorated_view
+    return func(*args, **kwargs)
+  File "D:\Etudiant\Test\qrcode\app\views.py", line 303, in search
+    f=open('./app/static/js/TypecodeIndex.js','r')
+IOError: [Errno 2] No such file or directory: '/app/static/js/TypecodeIndex.js'
+2015-11-19 18:39:04,201 ERROR: Exception on /search/+ 1 [GET] [in D:\Program Files\python\lib\site-packages\flask\app.py:1423]
+Traceback (most recent call last):
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "D:\Program Files\python\lib\site-packages\flask_login.py", line 792, in decorated_view
+    return func(*args, **kwargs)
+  File "D:\Etudiant\Test\qrcode\app\views.py", line 303, in search
+    f=open('./app/static/js/TypecodeIndex.js','r')
+IOError: [Errno 2] No such file or directory: '/app/static/js/TypecodeIndex.js'
+2015-11-21 11:48:12,221 ERROR: Exception on /login [POST] [in D:\Program Files\python\lib\site-packages\flask\app.py:1423]
+Traceback (most recent call last):
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\Program Files\python\lib\site-packages\flask\app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "D:\Etudiant\Test\qrcode\app\views.py", line 42, in login
+    for item in os.listdir(src):
+WindowsError: [Error 3] : 'D:\\Etudiant\\qrcode\\app\\static\\img\\*.*'

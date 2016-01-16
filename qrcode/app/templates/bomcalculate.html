@@ -1,0 +1,139 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+{% block content %}
+<style>
+.divcss_product{width:800px;height:400px; border:0px solid #000; overflow-y:scroll; }
+.divcss_product_bom{width:800px;height:200px; border:1px solid #000; overflow-y:scroll; }
+</style>
+<div id='info' class="divcss_product" >
+     
+    <table border=1 cellpadding="8" class="table table-striped">
+            <th></th>   
+            <th width="120" style="text-align:center">序列号</th>
+            <th width="100" style="text-align:center">版本</th>
+            <th width="120" style="text-align:center">ERP编号</th>
+            <th width="180" style="text-align:center">日期</th>
+            <th width="200" style="text-align:center">备注</th>
+            <th width="80" style="text-align:center">操作</th>
+        {% for info in table_product %}
+            <tr>
+            {% for x in info[:-1] %}
+                <td style="text-align:center">{{x}}</td>
+            {% endfor %}
+                <td style="text-align:center"><a href={{url_for('bomcalculate', product_flag = info[-1], code_search = code_input, product_id = product_id)}}> 添加 </a></td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+<h3>&nbsp;&nbsp;&nbsp;&nbsp;产品物料表:</h3>
+<div id='bomdetail' class="divcss_product_bom" >
+     
+    <table border=1 cellpadding="8" class="table table-bordered" id='table_material_print'>
+            <th></th>   
+            <th width="200" style="text-align:center">序列号</th>
+            <th width="100" style="text-align:center">版本</th>
+            <th width="200" style="text-align:center">ERP编号</th>
+            <th width="150" style="text-align:center">数量</th>
+            <th width="150" style="text-align:center">物料详情</th>
+        {% for info in table_product_bom %}
+            <tr>
+            {% for x in info[:-1] %}
+                <td style="text-align:center">{{x}}</td>
+            {% endfor %}
+                <script language="javascript" type="text/javascript">
+                var name='select_info'+'{{info[-1]}}'
+                var tag='#myModal'+'{{info[-1]}}'
+                document.write("<td style='text-align:center'><input name='" + name + "' value='1' id='num_print' type='number' min='0' max='10000' step='1' style = 'width:80px'></input></td><td style='text-align:center'><button data-toggle='modal' data-target='" + tag + "' style = 'width:80px;height:30px'> 查看 </button></td>");
+                </script>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<!-- 模态框（Modal） -->
+{% for info in table_product_bom %}
+<script language="javascript" type="text/javascript">
+var tag = 'myModal'+'{{info[-1]}}'
+document.write("<div class='modal fade' id='" + tag + "' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>");
+</script>
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" 
+               data-dismiss="modal" aria-hidden="true">
+                  &times;
+            </button>
+            <h4 class="modal-title" id="myModalLabel">
+               {{table_product_name[info[-1]]}}
+            </h4>
+         </div>
+         <div class="modal-body">
+            <div id='info' class="divcss_material" >
+   
+                <table border=1 cellpadding="8" class="table table-bordered">
+                       
+                        <th></th>
+                        <th width="100" style="text-align:center">物料编号</th>
+                        <th width="250" style="text-align:center">物料名称</th>
+                        <th width="250" style="text-align:center">规格型号</th>
+                        <th width="200" style="text-align:center">备注</th>
+                        <th width="80" style="text-align:center">数量</th>
+                    {% for infox in table_material[info[-1]] %}
+                        <tr>
+                        {% for x in infox %}
+                            <td style="text-align:center">{{x}}</td>
+                        {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+          
+         </div>
+      </div><!-- /.modal-content -->
+</div><!-- /.modal -->
+</div>
+{% endfor %}
+<br>
+<div style="width: 760px; float:rignt" align="right">{{form.calculate(style="width:120px; height:35px", class="btn btn-info")}}
+</div>
+
+{% if flag_print == 'Yes' %}
+
+<script language="javascript"> 
+    
+    var html_words = '<html><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><div id="info" style="width:1000px"> <h3> 物料信息汇总表: </h3>'
+    var rows = document.getElementById("table_material_print").rows.length;
+    var rows_info = '{{table_material_print_head}}'.split(';');
+    var val_1 = '<table border="0"><th width="100">序列号</th><th width="100">版本</th><th width="100">数目</th>';
+    for (var i=1;i<rows;i++){
+        var val = rows_info[i].split('_');
+        val_1 = val_1 +'<tr><td style="text-align:center">' + val[0]+'</td><td style="text-align:center">'+val[1]+ '</td><td style="text-align:center">'+val[2] + "</td></tr>";
+    }
+    html_words = html_words + val_1+ '</table><br><table border=1 cellpadding="8" class="table table-bordered"><th></th><th width="100" style="text-align:center">物料编号</th><th width="250" style="text-align:center">物料名称</th> <th width="250" style="text-align:center">规格型号</th><th width="200" style="text-align:center">备注</th><th width="80" style="text-align:center">数量</th>';
+    html_python = '{{table_material_print_use}}'.split('+#')
+    for (var i=0; i<html_python.length/6; i++){ 
+        var html_words_2 = '';
+        for (var j=0; j<6; j++){
+            html_words_2 = html_words_2 + '<td style="text-align:center">' +  html_python[j+6*i] + '</td>';
+        }
+        var html_words_1 = '<tr>' + html_words_2 + '</tr>';
+        html_words = html_words + html_words_1;
+    }
+    html_words = html_words + '</table></div></html>';
+    var html_print = '<br><div style="width:1000px" align="center"><button onclick=window.print() style="width:80px;height:30px"> 打印</button></div>';
+    printWindow = window.open();
+    printWindow.document.write(html_words);
+    printWindow.document.write(html_print);
+
+    
+</script>
+
+
+{% endif %}
+
+
+{% endblock %}

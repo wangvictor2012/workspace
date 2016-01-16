@@ -1,0 +1,91 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+{% block content %}
+<style>
+.divcss_product{width:800px;height:600px; border:0px solid #000; overflow-y:scroll; }
+</style>
+<div id='info' class="divcss_product" >
+     
+    <table border=1 cellpadding="8" class="table table-striped">
+            <th></th>   
+            <th width="120" style="text-align:center">序列号</th>
+            <th width="100" style="text-align:center">版本</th>
+            <th width="120" style="text-align:center">ERP编号</th>
+            <th width="180" style="text-align:center">日期</th>
+            <th width="200" style="text-align:center">备注</th>
+            <th width="80" style="text-align:center">操作</th>
+        {% for info in table_product %}
+            <tr>
+            {% for x in info[:-1] %}
+                <td style="text-align:center">{{x}}</td>
+            {% endfor %}
+                <script language="javascript" type="text/javascript">
+                var tag='#myModal'+'{{info[-1]}}'
+                document.write("<td style='text-align:center'><button data-toggle='modal' data-target='" + tag + "' style = 'width:80px;height:30px'> 查看/打印 </button></td>");
+                </script>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<!-- 模态框（Modal） -->
+{% for info in table_product %}
+<script language="javascript" type="text/javascript">
+var tag = 'myModal'+'{{info[-1]}}'
+document.write("<div class='modal fade' id='" + tag + "' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>");
+</script>
+   <div class="modal-dialog" >
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" 
+               data-dismiss="modal" aria-hidden="true">
+                  &times;
+            </button>
+            <h4 class="modal-title" id="myModalLabel">
+               {{table_product_name[info[-1]][0]}}
+            </h4>
+         </div>
+         <div class="modal-body" id="{{table_product_name[info[-1]][0]}}">
+            <div class="divcss_material" >
+   
+                <table border=1 cellpadding="8" class="table table-bordered">
+                       
+                        <th></th>
+                        <th width="100" style="text-align:center">物料编号</th>
+                        <th width="250" style="text-align:center">物料名称</th>
+                        <th width="250" style="text-align:center">规格型号</th>
+                        <th width="200" style="text-align:center">备注</th>
+                        <th width="100" style="text-align:center">数量</th>
+                    {% for infox in table_material[info[-1]] %}
+                        <tr>
+                        {% for x in infox %}
+                            <td style="text-align:center">{{x}}</td>
+                        {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-primary" onclick='printme("{{table_product_name[info[-1]][0]}}", "{{table_product_name[info[-1]][1]}}", "{{table_product_name[info[-1]][2]}}")'>打印</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+         </div>
+      </div><!-- /.modal-content -->
+</div><!-- /.modal -->
+</div>
+{% endfor %}
+
+
+<script language="javascript">
+function printme(print_id, producer, date){
+    printWindow = window.open();
+    var name = "<h4>产品型号："+ print_id + "</h4><h4>创建人：" + producer + '</h4><h4>创建日期：'+ date + "</h4>";
+    printWindow.document.body.innerHTML=name + document.getElementById(print_id).innerHTML;
+    printWindow.window.print();
+    printWindow.close();
+}
+</script>
+
+<br><br><br><br><br><br>
+{% endblock %}
