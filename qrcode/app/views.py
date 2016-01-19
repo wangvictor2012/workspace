@@ -176,7 +176,8 @@ def index(version_info='init',machinecode='+', flag_return=0,  remark_info=''):
             if version_info == 'init' and flag_return == 0:
                 if len(results_bom)>0:
                     for j in range(len(results_bom)):
-                        info = [str(i), row[0], results_bom[j][2], partnamex, row[1]]
+                        mark = str(row[1]) + ' ## DIFFERENCE:  ' + str(results_bom[j][7])
+                        info = [str(i), row[0], results_bom[j][2], partnamex, mark]
                         datainfo.insert(len(datainfo),info)
                         i+=1
                 else:
