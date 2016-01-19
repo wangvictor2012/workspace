@@ -1,0 +1,200 @@
+{% extends "bs.html" %}
+{% block content %}
+<div class="container">
+  <div class="row cvheader">
+    <div class="col-lg-7 col-md-7 col-xs-12">
+      <!--  添加颜色//-->
+      <h1 class="text-primary">Yu LOU</h1>
+      <br>
+      <!--  添加图标 //-->
+      <p><span class="fa fa-tags"></span> 北京搬砖小帅哥</p>
+    </div>
+    
+    <div class="col-lg-3 col-md-3 col-xs-12">
+      <div class="row">
+        
+        <div class="col-lg-4 col-md-4 col-xs-4">
+          <p id="contact" class="address text-center">联系</p>
+        </div>
+        
+        <div class="col-lg-8 col-md-8 col-xs-8">
+          <p><span class="fa fa-envelope"></span> 娄煜</p>
+          <p><span class="fa fa-phone"></span> 1881755XXXX</p>
+          <p><span class="fa fa-map-marker"></span> SJTU - X34</p>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="col-lg-2 col-md-2 col-xs-12">
+      <p>
+        <!-- 这里定义图片为响应式，并且添加圆角效果，以便保证图片在不同设备上都可以完美显示 //-->
+        <img data-toggle="tooltip" data-placement="left" id="avatar" title="我是娄煜，请多多关照 ^_^" class="img-responsive img-rounded" src="../static/img/team/member2.jpg" alt="">
+       </p>
+    </div>
+  </div>
+</div>
+
+<!-- 定义简历的主体部分 //-->
+
+<div class="container">
+  <div class="row cvbody">
+    
+    <!-- 这里定义两个区域，布局定义如下：//-->
+    
+    <div class="col-lg-6 col-md-6 col-xs-12">
+    
+      <div class="row">
+        <div class="cbox green">
+          <h4>个人介绍</h4>
+          <p>
+            等待个人完善补充。。。<br>
+            等待个人完善补充。。。<br>
+            等待个人完善补充。。。
+          </p>
+        </div>
+        <div class="cbox red">
+          <h4>个人技能</h4>
+          <p>
+            <!-- 这里使用Bootstrap3的组件添加技能 //-->
+            
+            打游戏
+            <div class="progress">
+              <div class="progress-bar progress-bar-success" style="width:80%"></div>
+            </div>
+            
+            瞎闹腾
+            <div class="progress">
+              <div class="progress-bar progress-bar-primary" style="width:90%"></div>
+            </div>
+            
+            专业课
+            <div class="progress">
+              <div class="progress-bar progress-bar-info" style="width:80%"></div>
+            </div>
+            
+            哈哈哈
+            <div class="progress">
+              <div class="progress-bar progress-bar-warning" style="width:50%"></div>
+            </div>
+          </p>
+        </div>
+        <div class="cbox orange">
+          <h4>语言水平</h4>
+          <p>
+			<canvas id="en" width="150" height="150" class="pull-left"></canvas>
+			<canvas id="zh" width="150" height="150" class="pull-right"></canvas>
+			<p class="clearfix"></p>
+          </p>
+        </div>
+      </div>
+    
+    </div>
+    
+    <!-- 为了清楚的分割两个区域，这里我们添加了一个空白区域，或者也可以在CSS中定义Margin实现//-->
+    <div class="col-lg-1 col-md-1 col-xs-12"></div>
+    
+    <div class="col-lg-5 col-md-5 col-xs-12">
+    
+      <div class="row">
+        <div class="bbox">
+          <h4>教育背景</h4>
+          <p>
+            等待个人完善补充。。。<br>
+            等待个人完善补充。。。<br>
+            等待个人完善补充。。。
+          </p>
+        </div>
+        <div class="bbox">
+          <h4>工作经验</h4>
+          <p>
+            等待个人完善补充。。。<br>
+            等待个人完善补充。。。<br>
+            等待个人完善补充。。。
+          </p>
+        </div>
+        <div class="bbox">
+          <h4>个人爱好</h4>
+          <p>
+            <span class="glyphicon glyphicon-tree-deciduous"></span> 骑马
+            <span class="fa fa-map"></span> 旅游
+            <p><span class="glyphicon glyphicon-cutlery"></span> 美食</p>
+            <p><span class="fa fa-music"></span> 音乐</p>
+          </p>
+        </div>
+      </div>
+    
+    </div>
+    
+    
+  </div>
+</div>
+
+<!-- 
+<div class="container">
+  <div class="row"><div class="footer text-center">关注-微博</div></div>
+</div>
+定义简历页底 //-->
+<!-- 引入jQuery类库和Bootstrap3的Javascript类库 //-->
+<script src="../static/js/jquery.js"></script>
+<script src="../static/js/bootstrap.min.js"></script>
+<script src="../static/js/Chart.js"></script>
+
+<script>
+/*Javascript源代码*/
+
+$(function(){
+  $('#contact').popover({placement:'bottom', container: 'body', html:true, content:'<p>QQ: 123456789</p><p>微博：weibo.com/hahaha</p><p>微信：abcdefg</p>'});
+  $('#avatar').tooltip({'placement':'bottom'});
+  
+	$.getScript('../static/js/Chart.js',function(){
+	  
+	  var zhdata = [{
+			label: '中文水平',
+			value: 90,
+			highlight: "#FFC870",
+			color: "#F7464A"
+		}, {
+			value: 10,
+			color: "#EEEEEE"
+		}
+		]
+
+		var zhoptions = {
+			animation: true,
+			segmentShowStroke : false
+		};
+
+		var c = $('#zh');
+		var ct = c.get(0).getContext('2d');
+		
+		var zhChart = new Chart(ct).Doughnut(zhdata, zhoptions);
+
+	
+	  var endata = [{
+			label: '英文水平',
+			value: 80,
+			highlight: "#5AD3D1",
+			color: "#4D5360"
+		}, {
+        value: 20,
+        color: "#EEEEEE"
+		}
+		]
+
+		var enoptions = {
+			animation: true,
+			segmentShowStroke : false
+		};
+
+		var c = $('#en');
+		var ct = c.get(0).getContext('2d');
+		
+		var enchart = new Chart(ct).Doughnut(endata, enoptions);
+	});
+
+});
+
+</script>
+
+{% endblock %}

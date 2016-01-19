@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
+
+<head>
+    <!-- BASICS -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>{{name}}</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../static/css/isotope.css" media="screen" /> 
+    <link rel="stylesheet" href="../static/js/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../static/css/bootstrap.css">
+    <link rel="stylesheet" href="../static/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <!-- skin -->
+    <link rel="stylesheet" href="../static/skin/default.css">
+  <style>
+
+	/* 定义辅助CSS来美化简历头部 */
+	body{
+	  font-family: 'microsoft yahei',Arial,sans-serif;
+	}
+
+	.cvheader{
+	  border-bottom: 1px solid #DFDFDF;
+	  padding-top:20px;
+	  padding-bottom:20px;
+	}
+
+	.cvheader h1{
+	  margin:0;
+	}
+
+	.address{
+	  background: #efb73e;
+	  color: #fff;
+	  padding: 10px 0;
+	}
+
+	/* 定义辅助CSS来美化简历主体 */
+
+	.cvbody{
+	  padding-top: 50px; 
+	}
+
+	.cbox{
+	  margin-bottom: 30px;
+	  color: #FFF;
+	  padding: 50px;
+	}
+
+	/* 定义cbox颜色 */
+	.green{
+	  background: #2ecc71;
+	}
+
+	.orange{
+	  background: orange;
+	}
+
+	.red{
+	  background: #dd4814;
+	}
+
+	.bbox{
+	  border: 1px solid #DFDFDF;
+	  border-radius: 5px;
+	  margin-bottom:30px;
+	  padding: 50px;
+	}
+
+	.footer{
+	  margin: 30px 0 30px;
+	  padding: 50px;
+	  background: #CCC;
+	  color: #FFF;
+	}
+</style>
+
+</head>
+<body>
+<script src="../static/js/jquery.nicescroll.min.js"></script>
+<script src="../static/js/main.js"></script>
+<script src="../static/js/jquery.localscroll-1.2.7-min.js"></script>
+<div class="navbar navbar-fixed-top skrollable skrollable-after" role="navigation" data-0="line-height:100px; height:100px; background-color:rgba(0,0,0,0.3);" data-300="line-height:60px; height:60px; background-color:rgba(0,0,0,1);" style="line-height: 60px; height: 60px; background-color: rgb(0, 0, 0);">
+       <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="fa fa-bars color-white"></span>
+          </button>
+          <h1><a class="navbar-brand skrollable skrollable-after" href="/" data-0="line-height:90px;" data-300="line-height:50px;" style="line-height: 50px;">      Kun WANG
+          </a></h1>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav skrollable skrollable-after" data-0="margin-top:20px;" data-300="margin-top:5px;" style="margin-top: 5px;">
+            <li class=""><a href="/#header">主页</a></li>
+            <li class=""><a href="/#section-about">团队</a></li>
+            <li class="active"><a href="/#section-works">娱乐</a></li>
+            <li><a href="/#section-contact">联系</a></li>
+          </ul>
+        </div><!--/.navbar-collapse -->
+      </div>
+    </div>
+       
+<br><br><br>
+  <!-- 定义简历的头部 //-->
+{% block content %}{% endblock %}
+<br>
+<section id="footer" class="section footer">
+    <div class="container">
+      <div class="row animated opacity mar-bot20" data-andown="fadeIn" data-animation="animation">
+        <div class="col-sm-12 align-center">
+                    <ul class="social-network social-circle">
+                        <li><a href="#" class="icoQq" title="QQ"><i class="fa fa-qq"></i></a></li>
+                        <li><a href="#" class="icoWechat" title="Wechat"><i class="fa fa-wechat"></i></a></li>
+                        <li><a href="#" class="icoBaidu" title="Baidu"><i class="fa fa-paw"></i></a></li>
+                        <li><a href="#" class="icoFacebook" title="Facebook"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#" class="icoLinkedin" title="Linkedin"><i class="fa fa-linkedin"></i></a></li>
+                    </ul>       
+        </div>
+      </div>
+
+      <div class="row align-center copyright">
+          <div class="col-sm-12"><p>Copyright &copy; 2016 Kun WANG in SJTU</p></div>
+      </div>
+    </div>
+
+  </section>
+
+
+</body>
+</html>

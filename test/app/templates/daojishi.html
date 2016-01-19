@@ -1,0 +1,54 @@
+{% extends "bs.html" %}
+{% block content %}
+	<style>
+	.fixedheight{
+		height: 240px;
+		padding: 85px 0;
+	}
+	</style>
+
+		<div class="container">
+			<header class="gbtags-header">
+				<div class="page-header">
+				<h1 class="text-primary"><span class="glyphicon glyphicon-th"></span> 倒计时效果测试 <span class="small">具体内容有待补充</span></h1>	
+				</div>
+			</header>
+			<section class="row">
+				<div class="col-md-6">
+					<div class="panel panel-primary">
+						<div class="panel-heading"><h3>交卷倒计时</h3></div>
+						<div class="panel-body text-center fixedheight">
+							<h2 class="text-danger"><span class="glyphicon glyphicon-time"></span> <span id="clock2"></span></h2>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="panel panel-primary">
+						<div class="panel-heading"><h3>出游倒计时</h3></div>
+						<div class="panel-body text-center fixedheight">
+							<h2 class="text-danger"><span class="glyphicon glyphicon-time"></span> <span id="clock1"></span></h2>
+						</div>
+					</div>
+				</div>
+			</section>
+
+		</div><!-- /container -->
+		<script type='text/javascript' src="../static/js/jquery.js"></script>
+		<script src="../static/js/jquery.countdown.js"></script>
+		<script>
+		var first = new Date(), second = new Date();
+		first.setDate(first.getDate()+5);
+		second.setSeconds(second.getSeconds()+3);
+		
+		$('#clock1').countdown(first, function(event) {
+			$(this).html(event.strftime('倒计时 %D 天 %H:%M:%S'));
+		})
+		var html_cont = '<div class="align-center"><a href="/"> 返回主页 </a></div>';
+		$('#clock2').countdown(second, function(event) {
+			$(this).html(event.strftime('倒计时 %D 天 %H:%M:%S'));
+		}).on('finish.countdown', function(){
+			$(this).parent().hide().html(html_cont).show().addClass('animated bounceIn').closest('.panel').removeClass('panel-primary').addClass('panel-success');
+		});
+		</script>
+
+{% endblock %}
