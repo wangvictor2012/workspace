@@ -1,0 +1,45 @@
+{% extends "bs.html" %}
+{% block content %}
+	<style>
+	.fixedheight{
+		height: 240px;
+		padding: 85px 0;
+	}
+	</style>
+
+		<div class="container">
+			<header class="gbtags-header">
+				<div class="page-header">
+				<h1 class="text-primary"><span class="glyphicon glyphicon-th"></span> 二维码生成器 <span class="small">具体内容有待补充</span></h1>	
+				</div>
+			</header>
+			<section class="row">
+				<div class="col-md-7">
+					<div class="panel panel-primary">
+						<div class="panel-heading"><h3>二维码信息</h3></div>
+						<div class="panel-body ">
+							<div class="form-group">
+	                            <p>	请输入要生成的二维码信息：</p>
+	                            <textarea name="message" id="message" class="form-control" rows="5" cols="5" required="required"
+	                                placeholder="Message"></textarea>
+	                                <br>
+	                            <button class="btn btn-theme pull-right"> 提交 </button>
+	                        </div>
+	                    </div>
+					</div>
+				</div>
+			
+
+			<div class="col-md-5">
+					<div class="panel panel-primary">
+						<div class="panel-heading"><h3>生成的二维码</h3></div>
+						<div class="panel-body text-center fixedheight">
+							<h2 class="text-danger"> <span id="clock1"></span></h2>
+						</div>
+					</div>
+			</div>
+			</section>
+		</div><!-- /container -->
+		<script type='text/javascript' src="../static/js/jquery.js"></script>
+
+{% endblock %}

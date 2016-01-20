@@ -26,4 +26,8 @@ def zhuoyu():
 def daojishi():
     return render_template('daojishi.html', name="Daojishi");
 
+@app.route('/TwodimentionCode')
+def TwodimentionCode():
+    return render_template('erweima.html', name="Two Dimention Code");
+
 
