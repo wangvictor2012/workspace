@@ -111,7 +111,7 @@
 		<div class="container"> 
 		
 			<div class="row mar-bot40">	
-				<div class="col-lg-4" >
+				<div class="col-lg-3" >
 					<div class="align-center">
 						<a href={{url_for('google')}} ><i class="fa fa-google fa-5x mar-bot20"></i>
 						<h4 class="text-bold">访问谷歌</h4></a>
@@ -120,16 +120,25 @@
 					</div>
 				</div>
 			
-				<div class="col-lg-4" >
+				<div class="col-lg-3" >
 					<div class="align-center">
-						<a href={{url_for('TwodimentionCode', imgname="logo.png", info_2dcode='*')}} ><i class="fa fa-mortar-board fa-5x mar-bot20"></i>
+						<a href={{url_for('TwodimentionCode', imgname="logo.png", info_2dcode='*')}} ><i class="fa fa-server fa-5x mar-bot20"></i>
 						<h4 class="text-bold">二维码生成器</h4></a>
 						<p>根据输入内容生成对应的二维码， 同时提供该二维码的下载。
 						</p>
 					</div>
 				</div>
 
-				<div class="col-lg-4" >
+				<div class="col-lg-3" >
+					<div class="align-center">
+						<a href={{url_for('Software_download')}} ><i class="fa fa-download fa-5x mar-bot20"></i>
+						<h4 class="text-bold">软件下载</h4></a>
+						<p>提供常用的软件下载功能，欢迎访问并下载需要软件。
+						</p>
+					</div>
+				</div>
+
+				<div class="col-lg-3" >
 					<div class="align-center">
 						<a href={{url_for('daojishi')}} ><i class="fa fa-hourglass-3 fa-5x mar-bot20"></i>
 						<h4 class="text-bold">计时器</h4></a>

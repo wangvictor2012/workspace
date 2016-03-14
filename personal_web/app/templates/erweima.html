@@ -1,5 +1,6 @@
 {% extends "bs.html" %}
 {% block content %}
+<br><br><br>
 	<style>
 	.fixedheight{
 		height: 240px;
@@ -19,9 +20,9 @@
 					<div class="panel panel-primary">
 						<div class="panel-heading"><h3>二维码信息</h3></div>
 						<div class="panel-body " style="height:300px">
-							<div class="form-group">
+							<div>
 	                            <p>	请输入要生成的二维码信息：</p>	                   
-	                            {{form.message_TwoDcode(rows=7, cols=85)}}
+	                            {{form.message_TwoDcode(rows=7, cols=75)}}
 	                            <br><br>
 	                            {{form.submit_commit(class="btn btn-theme pull-right")}}
 	                            

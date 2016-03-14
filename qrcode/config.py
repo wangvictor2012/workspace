@@ -40,3 +40,5 @@ JsMaterialSerialIndexSrc = 'D:\\Etudiant\\Test\\qrcode\\app\\static\\js\\Materia
 ErrorlogSrc = 'D:\\Etudiant\\Test\\qrcode\\tmp\\error.log'
 #JsERPinfoSrc = '/var/www/qrcode/app/static/js/ERP_info.js'
 JsERPinfoSrc = 'D:\\Etudiant\\Test\\qrcode\\app\\static\\js\\ERP_info.js'
+
+ERPDownloadSrc = 'D:\\Etudiant\\Git_place\\qrcode\\app\\static\\files\\'

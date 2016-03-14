@@ -43,6 +43,7 @@ $('#typecode').autocomplete(data,{width: 570}).result(function(event, data, form
    <li><a href={{url_for('bomcalculate', product_flag='#', code_search='+', product_id = '#')}}>BOM 计算</a></li>
    {% if flag_edit =='Yes' %}
    <li><a href={{url_for('bomedit', num_rows = 3, table_detail='#')}}>BOM 编辑</a></li>
+   <li><a href={{url_for('erp_cal', erp_num='#')}}>ERP 计算</a></li>
    {% endif %}
 
 
@@ -53,6 +54,7 @@ $('#typecode').autocomplete(data,{width: 570}).result(function(event, data, form
    <li><a href={{url_for('bomcalculate', product_flag='#', code_search='+', product_id = '#')}}>BOM 计算</a></li>
    {% if flag_edit =='Yes' %}
    <li><a href={{url_for('bomedit', num_rows = 3, table_detail='#')}}>BOM 编辑</a></li>
+   <li><a href={{url_for('erp_cal', erp_num='#')}}>ERP 计算</a></li>
    {% endif %}
    
    {% elif flag == 'bominfo' %}
@@ -62,6 +64,7 @@ $('#typecode').autocomplete(data,{width: 570}).result(function(event, data, form
    <li><a href={{url_for('bomcalculate', product_flag='#', code_search='+', product_id = '#')}}>BOM 计算</a></li>
    {% if flag_edit =='Yes' %}
    <li><a href={{url_for('bomedit', num_rows = 3, table_detail='#')}}>BOM 编辑</a></li>
+   <li><a href={{url_for('erp_cal', erp_num='#')}}>ERP 计算</a></li>
    {% endif %}
 
    {% elif flag == 'bomcalculate' %}
@@ -71,6 +74,7 @@ $('#typecode').autocomplete(data,{width: 570}).result(function(event, data, form
    <li class="active"><a href={{url_for('bomcalculate', product_flag='#', code_search='+', product_id = '#')}}>BOM 计算</a></li>
    {% if flag_edit =='Yes' %}
    <li><a href={{url_for('bomedit', num_rows = 3, table_detail='#')}}>BOM 编辑</a></li>
+   <li><a href={{url_for('erp_cal', erp_num='#')}}>ERP 计算</a></li>
    {% endif %}
 
    {% elif flag == 'bomedit' and flag_edit =='Yes'%}
@@ -79,8 +83,19 @@ $('#typecode').autocomplete(data,{width: 570}).result(function(event, data, form
    <li><a href={{url_for('bominfo', product_flag='#', code_search='+')}}>BOM 查询</a></li>
    <li><a href={{url_for('bomcalculate', product_flag='#', code_search='+', product_id = '#')}}>BOM 计算</a></li>
    <li class="active"><a href={{url_for('bomedit', num_rows = 3, table_detail='#')}}>BOM 编辑</a></li>
+   <li><a href={{url_for('erp_cal', erp_num='#')}}>ERP 计算</a></li>
 
+   {% elif flag == 'erp_cal' and flag_edit =='Yes'%}
+   <li><a href={{url_for('index', machinecode='+', flag_return=0,version_info='init', remark_info='x')}}>主页</a></li>
+   <li><a href={{url_for('search', machinecode='+', page=1 )}}>历史查询</a></li>
+   <li><a href={{url_for('bominfo', product_flag='#', code_search='+')}}>BOM 查询</a></li>
+   <li><a href={{url_for('bomcalculate', product_flag='#', code_search='+', product_id = '#')}}>BOM 计算</a></li>
+   <li><a href={{url_for('bomedit', num_rows = 3, table_detail='#')}}>BOM 编辑</a></li>
+   <li class="active"><a href={{url_for('erp_cal', erp_num='#')}}>ERP 计算</a></li>
+
+   
    {% endif %}
+
 </ul>
   <div style="float:right">   
     {% if user != '' %}
@@ -111,6 +126,9 @@ $('#typecode').autocomplete(data,{width: 570}).result(function(event, data, form
                 {% elif flag == "bominfo" or flag == 'bomcalculate' %}
                   <span class="input-group-addon">BOM单</span></span>
 
+                {% elif flag == "erp_cal" %}
+                  <span class="input-group-addon">ERP 序列号</span></span>
+
                 {% endif %}
 
                   <input id="typecode" name='select_info' list="typex"  class="form-control" value={{code_input}} > </input>
@@ -119,6 +137,10 @@ $('#typecode').autocomplete(data,{width: 570}).result(function(event, data, form
         </div> 
 
         {{form.submit(class="btn btn-primary", style="width:90px;")}}
+
+        {% if flag == "erp_cal" %}
+        {{form.download(class="btn btn-primary", style="width:90px;margin-left:5%;")}}
+        {% endif %}
         
     <br><br>
     {% endif %}

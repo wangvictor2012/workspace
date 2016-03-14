@@ -1,10 +1,11 @@
 # -*- coding: UTF-8 -*-
-from flask import render_template, flash, redirect, request, url_for, g
+from flask import render_template, flash, redirect, request, url_for, g, send_from_directory
 from flask.ext.login import login_required, login_user, current_user, logout_user
 from PIL import Image, ImageDraw, ImageFont
 from forms import DcodeForm, UserForm, BomForm, BomForm_Edit
 from app import app, login_manager, db, models, TypecodeIndex
-from config import SQLSERVER_HOST, SQLSERVER_PORT, SQLSERVER_USER, SQLSERVER_PASS, SQLSERVER_DB, ImagefileSrc, JsTypecodeIndexSrc, JsMaterialSerialIndexSrc, JsERPinfoSrc
+from config import SQLSERVER_HOST, SQLSERVER_PORT, SQLSERVER_USER, SQLSERVER_PASS, SQLSERVER_DB, ImagefileSrc, JsTypecodeIndexSrc, JsMaterialSerialIndexSrc, JsERPinfoSrc, ERPDownloadSrc
+import xlwt
 import qrcode
 import MySQLdb
 import datetime, time
@@ -997,3 +998,197 @@ def Material_serial_Index():
     f1.close()
     f2.close()
     conn.close()
+
+
+@app.route('/erp_cal <erp_num>', methods = ['GET', 'POST'])
+@login_required
+def erp_cal(erp_num='#'):
+
+    form = BomForm()
+    flag_edit = 'Yes'
+    table_ERP_excel = []
+    ERP_sum = ['','',1]
+
+    conn=pymssql.connect(host=SQLSERVER_HOST,user=SQLSERVER_USER, password=SQLSERVER_PASS, database=SQLSERVER_DB, port=SQLSERVER_PORT, charset="UTF-8")
+    cou=conn.cursor()
+
+    if form.submit.data or form.download.data:
+        product_ERP = str(request.form.get('select_info'))
+        erp_num = product_ERP
+        dict_excel = {'material_number':[],'name':[], 'quantity':[],'location':[], 'unit':[], 'unit_price':[], 'price':[], 'cost_total':[], 'date':[], 'supplier':[], 'note':[], 'sum_cost':[';;',0]}
+        results = ERP_cal_process(product_ERP, dict_excel, cou)
+
+        table_ERP_excel.append(dict_excel['material_number'])
+        table_ERP_excel.append(dict_excel['name'])
+        table_ERP_excel.append(dict_excel['quantity'])
+        table_ERP_excel.append(dict_excel['unit'])
+        table_ERP_excel.append(dict_excel['unit_price'])
+        table_ERP_excel.append(dict_excel['price'])
+        table_ERP_excel.append(dict_excel['cost_total'])
+        table_ERP_excel.append(dict_excel['date'])
+        table_ERP_excel.append(dict_excel['supplier'])
+        table_ERP_excel.append(dict_excel['note'])
+
+        rows = len(table_ERP_excel[0])
+
+        ERP_sum = [dict_excel["sum_cost"][0].split(';;')[1], float(dict_excel["sum_cost"][1]), rows ]
+
+        if form.download.data:
+            filename = excel_write(dict_excel, product_ERP)
+            return send_from_directory(ERPDownloadSrc, filename=filename, as_attachment=True)
+    if erp_num == '#':
+        erp_num = ' '
+    conn.close()
+    return render_template('erp_cal.html', flag = 'erp_cal', flag_edit = flag_edit, username = str(g.user.name), 
+        form=form, table_ERP_excel=table_ERP_excel, ERP_sum=ERP_sum, code_input=erp_num)
+
+
+def ERP_cal_process(product_ERP, dict_excel, cou):
+    
+    sql = "select * from dbo.t_ICItemCore where FNumber = '%s'" %(str(product_ERP))
+    cou.execute(sql)
+    res_cou = cou.fetchall()
+    if len(res_cou)>0:
+        flag_ERP_find = 1 # find the ERP number info
+        #dict_excel['sum_cost'][0] += ";;" + res_cou[0][2]
+        dict_excel['sum_cost'][0] += res_cou[0][2].encode('latin1').decode('gbk') + ";;" 
+        product_ID = res_cou[0][0]
+        sql = "select * from dbo.ICBOM where FItemID = '%d'" %(int(product_ID))
+        cou.execute(sql)
+        res_cou = cou.fetchall()
+        #if len(res_cou)>0:
+        #print "The excel file is being calculed, please wait ..."
+        flag_bom_find = 0
+        for icbom in res_cou:
+            if icbom[4] == 1072:
+                flag_bom_find = 1 # find the using BOM 
+                BOM_ID = icbom[1]
+                sql = "select * from dbo.ICBOMChild where FInterID = '%d'" %(int(BOM_ID))
+                cou.execute(sql)
+                res_cou = cou.fetchall()
+                
+                sum_cost = 0
+                for bominfo in res_cou:
+                    #sheet.write(i,0,i-4)
+                    BOM_item_ID = bominfo[3]
+                    qty_use = bominfo[5]
+                    dict_excel['quantity'].append(int(bominfo[5]))
+                    dict_excel['location'].append(bominfo[24])
+                    sql = "select * from dbo.t_ICItemCore where FItemID = '%d'" %(int(BOM_item_ID))
+                    cou.execute(sql)
+                    res_cou = cou.fetchall()
+                    if len(res_cou)>0:
+                        
+                        dict_excel['material_number'].append(res_cou[0][6])
+                        #dict_excel['name'].append(res_cou[0][2])
+                        dict_excel['name'].append(res_cou[0][2].encode('latin1').decode('gbk'))
+                    
+                    sql = "select * from dbo.POOrderEntry where FItemID = '%d' ORDER BY FDate" %(int(BOM_item_ID))
+                    cou.execute(sql)
+                    res_cou = cou.fetchall()
+                    #print len(res_cou)
+                    if len(res_cou)>0:
+                        cost_total_row = res_cou[-1][26]*qty_use
+                 
+                        dict_excel['unit_price'].append(float(res_cou[-1][25]))
+                        dict_excel['price'].append(float(res_cou[-1][26]))
+                        dict_excel['cost_total'].append(float(cost_total_row))
+                        dict_excel['date'].append(str(res_cou[-1][6])[:-9])
+                        dict_excel['note'].append('')
+                        
+                        sql = "select * from dbo.t_MeasureUnit where FMeasureUnitID = '%d'" %(int(res_cou[-1][13]))
+                        
+                        cou.execute(sql)
+                        res_cou_unit = cou.fetchall()
+                        if len(res_cou_unit)>0:
+                            #dict_excel['unit'].append(res_cou_unit[0][4])
+                            dict_excel['unit'].append(res_cou_unit[0][4].encode('latin1').decode('gbk'))
+                      
+                        sql = "select * from dbo.POOrder where FInterID = '%d'" %(int(res_cou[-1][1]))
+                        cou.execute(sql)
+                        res_cou = cou.fetchall()
+                        if len(res_cou)>0:
+                            sql = "select * from dbo.t_Supplier where FItemID = '%d'" %(int(res_cou[0][4]))
+                            cou.execute(sql)
+                            res_cou = cou.fetchall()
+                            if len(res_cou)>0:
+                                #dict_excel['supplier'].append(res_cou[0][44])
+                                dict_excel['supplier'].append(res_cou[0][44].encode('latin1').decode('gbk'))
+                  
+                    else:
+                        cost_total_row = 0
+                     
+                        dict_excel['unit_price'].append(0)
+                        dict_excel['price'].append(0)
+                        dict_excel['cost_total'].append(0)
+                        dict_excel['date'].append(0)
+                        dict_excel['unit'].append(0)
+                        dict_excel['supplier'].append(0)
+                        dict_excel['note'].append(u'物料列表如下')
+
+                        ERP_cal_process(dict_excel['material_number'][-1], dict_excel, cou)
+                        
+                    dict_excel['sum_cost'][1] += cost_total_row 
+                else:
+                    break
+
+        if flag_bom_find == 0:
+            dict_excel['note'][-1] = u'未找到'
+
+        return 1
+   
+    else:
+        return 0
+
+def excel_write(dict_excel, product_ERP):
+    num_material = len(dict_excel['material_number'])
+    if num_material > 0:
+        wbk = xlwt.Workbook()
+        sheet = wbk.add_sheet('sheet 1')
+
+        sheet.write(1,0,u'产品名称:')
+        sheet.write(2,0,u'物料代码:')
+        sheet.write(1,1,dict_excel["sum_cost"][0].split(';;')[1])
+        sheet.write(2,1,product_ERP)
+
+        row_start = 5
+        sheet.write(row_start,0,u'顺序号')
+        sheet.write(row_start,1,u'物料代码')
+        sheet.write(row_start,2,u'物料名称')
+        sheet.write(row_start,3,u'用量')
+        sheet.write(row_start,4,u'位置号')
+        sheet.write(row_start,5,u'包装盘/个')
+        sheet.write(row_start,6,u'盘（个）价格')
+        sheet.write(row_start,7,u'元器件单价')
+        sheet.write(row_start,8,u'总价')
+        sheet.write(row_start,9,u'采购日期')
+        sheet.write(row_start,10,u'采购商')
+        sheet.write(row_start,11,u'备注')
+        i=0
+        for i in range(num_material):
+            sheet.write(i+row_start+1,0,i+1)
+            sheet.write(i+row_start+1,1,dict_excel['material_number'][i])
+            sheet.write(i+row_start+1,2,dict_excel['name'][i])
+            sheet.write(i+row_start+1,3,dict_excel['quantity'][i])
+            sheet.write(i+row_start+1,4,dict_excel['location'][i])
+            sheet.write(i+row_start+1,5,dict_excel['unit'][i])
+            sheet.write(i+row_start+1,6,dict_excel['unit_price'][i])
+            sheet.write(i+row_start+1,7,dict_excel['price'][i])
+            sheet.write(i+row_start+1,8,dict_excel['cost_total'][i])
+            sheet.write(i+row_start+1,9,dict_excel['date'][i])
+            sheet.write(i+row_start+1,10,dict_excel['supplier'][i])
+            sheet.write(i+row_start+1,11,dict_excel['note'][i])
+
+        sheet.write(i+8,7,u'成本总和')
+        sheet.write(i+8,8,dict_excel["sum_cost"][1])
+
+        date_now =  datetime.datetime.now()
+        date_now = str(date_now).replace(' ','-')
+        date_now = str(date_now).replace(':','-')
+        date_now = str(date_now).replace('.','-')
+        filename_real = date_now + '.xls'
+        filename = './app/static/files/'+ filename_real
+
+        wbk.save(filename)
+
+        return filename_real

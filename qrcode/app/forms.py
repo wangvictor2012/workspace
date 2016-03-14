@@ -28,6 +28,7 @@ class UserForm(Form):
 class BomForm(Form):
     submit = SubmitField(encodechinese("查询"))
     calculate = SubmitField(encodechinese("物料汇总"))
+    download = SubmitField(encodechinese("下载"))
     bomid = TextField('bomid', validators = [Required()])
 
 class BomForm_Edit(Form):

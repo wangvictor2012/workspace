@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+<h3 style="float: left;">查询结果: {{ERP_sum[0]}}</h3>    
+    <table border=1 cellpadding="8" class="table table-bordered">
+        <thead>
+            <th style="text-align:center; width:5%;">编号</th>
+            <th style="text-align:center; width:8%;">物料代码</th>
+            <th style="text-align:center; width:15%;">物料名称</th>
+            <th style="text-align:center; width:5%;">用量</th>
+            <th style="text-align:center; width:10%;">包装盘（个）</th>
+            <th style="text-align:center; width:10%;">盘（个）价格</th>
+            <th style="text-align:center; width:5%;">器件单价</th>
+            <th style="text-align:center; width:5%;">总价</th>
+            <th style="text-align:center; width:10%;">采购日期</th>
+            <th style="text-align:center; width:17%;">采购商</th>
+            <th style="text-align:center; width:10%;">备注</th>
+        </thead>	
+
+        <tbody style="text-align:center">
+	        {% for infox in range(1,ERP_sum[2]) %}
+	            <tr>
+	            	<td>{{infox}}</td>
+	            	{% for xx in range(10) %}
+	            	<td>{{table_ERP_excel[xx][infox-1]}}</td>
+	           		{% endfor %}
+
+	            </tr>
+	        {% endfor %}
+        </tbody>
+    </table>
+
+    <br> 
+    <h4 style="float:right; margin-right: 5%;">成本总计：{{ERP_sum[1]}} </h4> 
+    <br><br><br>
+            
+</div>
+
+{% endblock %}

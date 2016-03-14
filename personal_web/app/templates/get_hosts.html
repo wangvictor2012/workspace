@@ -1,0 +1,83 @@
+{% extends "bs.html" %}
+{% block content %}
+<br><br><br>
+	<style>
+	.fixedheight{
+		height: 240px;
+		padding: 85px 0;
+	}
+	</style>
+		<form action="" method="post" name="index">
+		{{ form.csrf_token }}
+		<div class="container">
+			<header class="gbtags-header">
+				<div class="page-header">
+				<h1 class="text-primary"> 访问谷歌等网站 <span class="small">具体内容有待补充</span></h1>	
+				</div>
+			</header>
+			<section class="row">
+				<div class="col-md-10">
+					<div class="panel panel-primary">
+						<div class="panel-heading"><h2>更改Hosts实现访问谷歌等网站</h2></div>
+						<div class="panel-body">
+							<div class="form-group">
+	                            <h3 class="text-default">如何修改 Hosts &nbsp;&nbsp;&nbsp;&nbsp;<span class="small"> <a href="http://baike.baidu.com/item/hosts" target="_blank">Hosts 介绍</a></span></h3>
+								<p>修改hosts，即替换当前系统中的hosts文件，具体替换位置如下：</p>
+								** Windows 系统的Hosts 文件在：c:\windows\system32\drivers\etc\目录下<br>
+								** 安卓(Android)手机系统的hosts文件在：system\etc\目录下</br>
+								** Mac、Linux 类系统的在：/etc/下，修改时应当注意权限问题。</br>
+								<br>
+								<p>在您开始之前，建议您备份当前 hosts，如果此文件内存在其他重要内容(可用记事本打开查看，#号行表示注释掉的内容)，请以追加的形式添加; 若无则可以直接替换。</p>
+	                            <br>
+	                            {{form.submit_gethosts(class="btn btn-theme pull-right")}}
+	                        </div>
+	                    </div>
+					</div>
+				</div>
+			
+			</section>
+			<br><br>
+			<section class="row">
+				<div class="col-md-10">
+					<div class="panel panel-success">
+						<div class="panel-heading"><h2>Hosts 相关</h2></div>
+						<div class="panel-body">
+							<div class="form-group">
+	                            <h3 class="text-default">Hosts 简介：</h3>
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hosts是一个没有扩展名的系统文件，可以用记事本等工具打开，其作用就是将一些常用的网址域名与其对应的IP地址建立一个关联“数据库”，当用户在浏览器中输入一个需要登录的网址时，系统会首先自动从Hosts文件中寻找对应的IP地址，一旦找到，系统会立即打开对应网页，如果没有找到，则系统会再将网址提交DNS域名解析服务器进行IP地址的解析。</p>
+								<br>
+								<h3 class="text-default">FAQ: 常见问题：</h3>
+								<h4>1、如何替换hosts？</h4>
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如上述介绍，不同系统的hosts地址不一样，以windows系统为例，只需要将下载的hosts替换掉C:\ windows \ system32 \ drivers \ etc\目录下的hosts即可。
+								</p>
+								<br>
+								<h4>2、如何刷新 DNS 缓存？</h4>
+								<p>Windows: 按下 Windows+R 键，运行 cmd，在命令提示符运行命令 ipconfig /flushdns<br>
+								OS X 10.10: 在［应用程序］［实用工具］［终端］运行命令 sudo discoveryutil udnsflushcaches<br>
+								OS X 10.9: 在［应用程序］［实用工具］［终端］运行命令 dscacheutil -flushcache; sudo killall -HUP mDNSResponder<br>
+								OS X 10.7 ~ 10.8: 在［应用程序］［实用工具］［终端］运行命令 sudo killall -HUP mDNSResponder <br>Linux: 在［终端］运行命令 /etc/rc.d/init.d/nscd restart<br>
+								Android、iOS: 重新启动设备
+								</p>
+								<br>
+								<h4>3、为什么更新后任然无法访问？</h4>
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果更改hosts后任然无法访问，您可以尝试刷新DNS缓存试试，任然无效的话，可能是当前的hosts的IP地址不够稳定，我们会尽快提供稳定的hosts供您使用。
+								</p>
+
+								<br>
+								<h4>4、我可以自己寻找新的 IP 吗？</h4>
+
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以。您可以通过其他方式找到可用的ip地址，然后通过修改hosts文件，达到访问目的。C盘hosts文件可能无法直接修改，您可以复制到桌面之后，再用记事本方式打开，修改后将原来hosts覆盖掉即可。
+								</p>
+
+
+	                        </div>
+	                    </div>
+					</div>
+				</div>
+			
+			</section>
+		</div><!-- /container -->
+		</form>
+		
+
+{% endblock %}

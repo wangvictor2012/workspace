@@ -30,6 +30,10 @@ def yu():
 def zhuoyu():
     return render_template('zhuoyu.html', name="Zhuoyu GUO");
 
+@app.route('/software_download', methods = ['GET', 'POST'])
+def Software_download():
+    return render_template('software_download.html', name="Software Download");
+
 @app.route('/daojishi')
 def daojishi():
     return render_template('daojishi.html', name="Daojishi");

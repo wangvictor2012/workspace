@@ -1,0 +1,43 @@
+{% extends "bs.html" %}
+{% block content %}
+	<section id="section-software-download" class="section pad-bot30 bg-white">
+
+		<div class="container"> 
+			<header class="gbtags-header">
+				<div class="page-header">
+				<h1 class="text-primary"><span class="glyphicon glyphicon-th"></span> 常用软件下载 <span class="small">具体内容有待补充</span></h1>	
+				</div>
+			</header>
+			<div class="row mar-bot40">	
+				<div class="col-lg-4" >
+					<div class="align-center">
+						<a href='/static/softwares/ziyoumen.rar' ><i class="fa fa-flag fa-5x mar-bot20"></i>
+						<h4 class="text-bold">翻墙：自由门</h4></a>
+						<p>翻墙软件，可访问大陆的确被限制的国外网站，但是速度限制较为明显，平均200KB/s。
+						</p>
+					</div>
+				</div>
+			
+				<div class="col-lg-4" >
+					<div class="align-center">
+						<a href='http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html' target="_blank"><i class="fa fa-server fa-5x mar-bot20"></i>
+						<h4 class="text-bold">远程登录：Putty</h4></a>
+						<p>针对Windows系统用户，可以通过SSH远程登录linux系统，进行系统文件操作。
+						</p>
+					</div>
+				</div>
+
+				<div class="col-lg-4" >
+					<div class="align-center">
+						<a href={{url_for('Software_download')}} ><i class="fa fa-download fa-5x mar-bot20"></i>
+						<h4 class="text-bold">待补充</h4></a>
+						<p>该部分内容有待补充完成。
+						</p>
+					</div>
+				</div>
+			
+			</div>	
+
+		</div>
+		</section>
+{% endblock %}
